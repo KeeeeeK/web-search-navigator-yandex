@@ -1555,6 +1555,7 @@ const getSearchEngine = (options) => {
     new Github(options),
     new Gitlab(options),
     new CustomGitlab(options),
+    new Yandex(options),
   ];
   // Switch over all compatible search engines
   const href = window.location.href;
@@ -1565,3 +1566,21 @@ const getSearchEngine = (options) => {
   }
   return null;
 };
+
+class Yandex {
+  constructor(options) {
+    this.options = options;
+  }
+  get urlPattern() {
+    return /^https:\/\/(www\.)?yandex\./;
+  }
+ get searchBoxSelector() {
+    return 'input[class="HeaderDesktopForm-Input mini-suggest__input"]';
+  }
+
+  getSearchResults() {
+    const includedElements = []
+    return getSortedSearchResults(includedElements, []);
+  }
+
+}
