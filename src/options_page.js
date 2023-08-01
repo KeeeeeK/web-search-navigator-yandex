@@ -72,6 +72,7 @@ const OPTIONAL_PERMISSIONS_URLS = {
   'amazon': generateURLPatterns('https://www.amazon', AMAZON_DOMAINS, '/*'),
   'gitlab': ['https://gitlab.com/*'],
   'custom-gitlab': ['https://*/*'],
+  'yandex': ['https://yandex.ru/*'],
 };
 
 const KEYBINDING_TO_DIV = {
@@ -154,6 +155,10 @@ class OptionsPageManager {
     const customGitlab = document.getElementById('custom-gitlab');
     customGitlab.addEventListener('change', () => {
       setSearchEnginePermission_(customGitlab);
+    });
+    const yandex = document.getElementById('yandex');
+    yandex.addEventListener('change', () => {
+      setSearchEnginePermission_(yandex);
     });
     // NOTE: this.saveOptions and this.resetToDefaults cannot be passed directly
     // or otherwise `this` won't be bound to the object.
@@ -277,6 +282,10 @@ class OptionsPageManager {
           return permissions.origins.includes(url);
         },
     );
+    const yandex = document.getElementById('yandex');
+    yandex.checked = OPTIONAL_PERMISSIONS_URLS['yandex'].every((url) => {
+      return permissions.origins.includes(url);
+    });
   }
 
   // Load options from browser.storage.sync to the DOM.
